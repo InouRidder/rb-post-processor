@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module CodeExamples
+  def self.syntax_error
+    'def my_method'
+  end
   EXAMPLES = [
     {
       input:

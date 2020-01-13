@@ -29,5 +29,10 @@ RSpec.describe 'Formattings API', type: :request do
         expect(json['result']).to match(example[:output])
       end
     end
+
+    it 'returns formatting error for broken code' do
+      request(CodeExamples.syntax_error)
+      expect(json['result']).to match('formatting error')
+    end
   end
 end
