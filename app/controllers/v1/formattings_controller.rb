@@ -6,7 +6,7 @@ module V1
     def create
       render json: {
         result: format!
-      }, status: error? ? :bad_request : :ok
+      }, status: @status
     end
 
     private
@@ -15,14 +15,11 @@ module V1
       params.require(:code)
     end
 
-    def error?
-      @error
-    end
-
     def format!
+      @status = :ok
       Rufo.format(formatting_params)
     rescue Rufo::SyntaxError
-      @error = true
+      @status = :bad_request
       'formatting error'
     end
   end
