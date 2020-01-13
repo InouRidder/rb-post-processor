@@ -5,7 +5,7 @@ module V1
   class FormattingsController < ApplicationController
     def create
       render json: {
-        result: Rufo.format(formatting_params)
+        result: format!
       }, status: :ok
     end
 
@@ -13,6 +13,12 @@ module V1
 
     def formatting_params
       params.require(:code)
+    end
+
+    def format!
+      Rufo.format(formatting_params)
+    rescue Rufo::SyntaxError
+      'formatting error'
     end
   end
 end
