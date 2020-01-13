@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require_relative '../../support/code_examples'
+
 def request(code)
   post(
     v1_formattings_path,
@@ -33,6 +34,11 @@ RSpec.describe 'Formattings API', type: :request do
     it 'returns formatting error for broken code' do
       request(CodeExamples.syntax_error)
       expect(json['result']).to match('formatting error')
+    end
+
+    it 'returns http bad_request for broken code' do
+      request(CodeExamples.syntax_error)
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
